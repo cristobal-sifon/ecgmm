@@ -1,0 +1,18 @@
+This package is an implementation of 1 dimensional error corrected Gaussian Mixture model in C++ and python. To speed up the calculation, the key part of the code is a C++ class, ecGMMClass.h, which implements the ECGMM iterations.
+
+There are 3 subdirectories: src, bin and py. 
+In src, there are 4 files:
+
+ecGMMClass.h: the C++ class that implement the EM iterations.
+ecGMMexample.cpp: an example C++ code showing how to use the ecGMMClass.h class.
+   
+ecgmm.h: Two functions defined based on ecGMMClass.h. They both calculate the mixture model parameters but one return the BIC and another return AIC.   
+ecgmm.i
+
+
+The usage of this class is shown in the ecGMMexample.cpp. The example file can be compiled by typing make. 
+
+
+Report any bugs/problems to jghao@umich.edu / jianganghao@gmail.com
+
+Copyright: Jiangang Hao, Phys. Dept. University of Michigan, Sept. 2008
