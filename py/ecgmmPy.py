@@ -107,13 +107,13 @@ def bic_ecgmm(xx=None,xxerr=None,aalpha=None,mmu=None,ssigma=None):
     sigma=DoubleVector(N)
 
     for i in range(0,M):
-        x[i]=xx[i]
-        xerr[i]=xxerr[i]
+        x[i]=np.double(xx[i])
+        xerr[i]=np.double(xxerr[i])
     
     for i in range(0,N):
-        alpha[i]=aalpha[i]
-        mu[i]=mmu[i]
-        sigma[i]=ssigma[i]
+        alpha[i]=np.double(aalpha[i])
+        mu[i]=np.double(mmu[i])
+        sigma[i]=np.double(ssigma[i])
 
     BIC=BICecgmm(x,xerr,alpha,mu,sigma)
       
@@ -151,13 +151,13 @@ def aic_ecgmm(xx=None,xxerr=None,aalpha=None,mmu=None,ssigma=None):
     sigma=DoubleVector(N)
 
     for i in range(0,M):
-        x[i]=xx[i]
-        xerr[i]=xxerr[i]
+        x[i]=np.double(xx[i])
+        xerr[i]=np.double(xxerr[i])
     
     for i in range(0,N):
-        alpha[i]=aalpha[i]
-        mu[i]=mmu[i]
-        sigma[i]=ssigma[i]
+        alpha[i]=np.double(aalpha[i])
+        mu[i]=np.double(mmu[i])
+        sigma[i]=np.double(ssigma[i])
 
     AIC=AICecgmm(x,xerr,alpha,mu,sigma)
     for i in range(0,N):
@@ -179,7 +179,7 @@ def wstat(xx=None,xxerr=None):
 
          Call: wstat(x,x_err)
 
-         Return: (weighted mean, weighted sd)
+         Return: (weighted mean, weighted sd, AIC, BIC)
     """
     if xxerr == None:
         xxerr = np.zeros(len(xx))
@@ -192,8 +192,8 @@ def wstat(xx=None,xxerr=None):
     sigma=DoubleVector(N)
 
     for i in range(0,M):
-        x[i]=xx[i]
-        xerr[i]=xxerr[i]
+        x[i]=np.double(xx[i])
+        xerr[i]=np.double(xxerr[i])
     
     for i in range(0,N):
         alpha[i]=1.
@@ -201,8 +201,8 @@ def wstat(xx=None,xxerr=None):
         sigma[i]=np.std(xx)
 
     AIC=AICecgmm(x,xerr,alpha,mu,sigma)
-      
-    return mu[0],sigma[0]
+    BIC=BICecgmm(x,xerr,alpha,mu,sigma)  
+    return mu[0],sigma[0],AIC,BIC
 
 
 
