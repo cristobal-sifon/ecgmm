@@ -79,8 +79,25 @@ import pylab as pl
 
 
 
-def bic_ecgmm(xx,xxerr,aalpha,mmu,ssigma):
+def bic_ecgmm(xx=None,xxerr=None,aalpha=None,mmu=None,ssigma=None):
   
+    """
+    Functions:
+     
+     ------------------------------------------------------------------
+     bic_ecgmm:
+
+         Purpose: perform the ECGMM and return Bayesian Information 
+                  Criterion (BIC). The number of mixtures is determined 
+                  by the input array of alpha of your initial guess. 
+
+         Call  : bic_ecgmm(x,xerr,alpha,mu,sigma)
+
+         Return: BIC. The input alpha, mu and sigma are also updated with
+                 the final fitting values.
+    """
+    if xxerr == None:
+        xxerr = np.zeros(len(xx))
     M=len(xx)
     N=len(aalpha)
     x=DoubleVector(M)
@@ -109,8 +126,22 @@ def bic_ecgmm(xx,xxerr,aalpha,mmu,ssigma):
 
 
 
-def aic_ecgmm(xx,xxerr,aalpha,mmu,ssigma):
-        
+def aic_ecgmm(xx=None,xxerr=None,aalpha=None,mmu=None,ssigma=None):
+
+    """ 
+    aic_ecgmm:
+
+         Purpose: perform the ECGMM and return Akaike Information Criterion 
+                  (AIC). The number of mixtures is determined by the input 
+                  array of alpha of your initial guess. 
+
+         Call  : aic_ecgmm(x,xerr,alpha,mu,sigma)
+
+         Return: AIC. The input alpha, mu and sigma are also updated with 
+                 the final fitting values.
+    """
+    if xxerr == None:
+        xxerr = np.zeros(len(xx))    
     M=len(xx)
     N=len(aalpha)
     x=DoubleVector(M)
@@ -139,7 +170,19 @@ def aic_ecgmm(xx,xxerr,aalpha,mmu,ssigma):
 
 
   
-def wstat(xx,xxerr):
+def wstat(xx=None,xxerr=None):
+
+    """
+    wstat:
+         
+         Purpose: calculate the weighted mean and standard deviation
+
+         Call: wstat(x,x_err)
+
+         Return: (weighted mean, weighted sd)
+    """
+    if xxerr == None:
+        xxerr = np.zeros(len(xx))
     M=len(xx)
     N=1
     x=DoubleVector(M)
@@ -165,6 +208,18 @@ def wstat(xx,xxerr):
 
 
 def ecgmmplot(x,alpha,mu,sigma):
+
+    """
+    ecgmmplot: 
+
+         Purpose: make plot of mixture of gaussians based on the fitting
+                  results
+
+         Call: ecgmmplot(x,alpha,mu,sigma)
+
+         Return: a pylab plot object. Use pl.show() to see it
+    """
+
     color=['r','g','b','c','m','y','k']
     if len(alpha)<=len(color):
         pl.hold(True)
@@ -177,6 +232,8 @@ def ecgmmplot(x,alpha,mu,sigma):
             pl.plot(x,alpha[i]*np.exp(-(x-mu[i])**2/2./sigma[i]**2)/np.sqrt(2*3.14159265)/sigma[i],'b.')
 
     return(0)
+
+
         
 
 
