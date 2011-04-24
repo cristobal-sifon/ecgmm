@@ -224,17 +224,64 @@ def ecgmmplot(x,alpha,mu,sigma):
     if len(alpha)<=len(color):
         pl.hold(True)
         for i in range(0,len(alpha)):
-            pl.plot(x,alpha[i]*np.exp(-(x-mu[i])**2/2./sigma[i]**2)/np.sqrt(2*3.14159265)/sigma[i],'.',color=color[i])
+            pl.plot(x,alpha[i]*np.exp(-(x-mu[i])**2/2./sigma[i]**2)/np.sqrt(2*3.14159265)/sigma[i],'-',color=color[i])
     else:
         print "Number of mixture exceeds 7, all will be in same color"
         pl.hold(True)
         for i in range(0,len(alpha)):
-            pl.plot(x,alpha[i]*np.exp(-(x-mu[i])**2/2./sigma[i]**2)/np.sqrt(2*3.14159265)/sigma[i],'b.')
+            pl.plot(x,alpha[i]*np.exp(-(x-mu[i])**2/2./sigma[i]**2)/np.sqrt(2*3.14159265)/sigma[i],'b-')
 
     return(0)
 
 
         
+def bsecgmm(xx=None,xxerr=None,aalpha=None,mmu=None,ssigma=None,nboot=50,InfoCriteria= 'AIC'):
+
+    """
+    bsecgmm: 
+
+         Purpose: increase the reliability of the ecgmm by bootstrapping
+
+         Call: bsecgmm(x,alpha,mu,sigma,nboot = 50,InfoCriteria= 'AIC')
+               nboot: the number of bootstrap you specify.Default is 50
+               InfoCriteria: the information criteria used. Can be 'AIC' or 'BIC'. 
+                             Default is 'AIC'.
+         Return: The calculated information criteria as well as alpha, mu, sigma updated.
+    """
+    alphaB=[]
+    muB=[]
+    sigmaB=[]
+    if InfoCriteria == 'BIC':
+        BIC=np.zeros(nboot)
+        for i in range(nboot):
+            print i
+            ok=np.random.randint(0,nboot-1,nboot)
+            x=xx[ok]
+            xerr=xxerr[ok]
+            alpha=aalpha
+            mu=mmu
+            sigma=ssigma
+            BIC[i]=ec.bic_ecgmm(xx=x,xxerr=xerr,aalpha=alpha,mmu=mu,ssigma=sigma)
+            alphaB.append(aalpha)
+            muB.append(mmu)
+            sigmaB.append(ssigma)
+    else:
+        AIC=np.zeros(nboot)
+        for i in range(nboot):
+            ok=np.random.randint(0,nboot-1,nboot)
+            x=xx[ok]
+            xerr=xxerr[ok]
+            alpha=aalpha[ok]
+            mu=mmu[ok]
+            sigma=ssigma[ok]
+            AIC[i]=ec.aic_ecgmm(xx=x,xxerr=xerr,aalpha=alpha,mmu=mu,ssigma=sigma)
+            alphaB.append(alpha)
+            muB.append(mu)
+            sigmaB.append(sigma)
+    
+
+    return(0)
+
 
 
 
