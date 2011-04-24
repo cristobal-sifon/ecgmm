@@ -113,18 +113,13 @@ def sigmanew(c,delta,r,mu,sigma):
     return res
 
 
-def lkhood1(c,delta,r):
-    mu,sigma,aic,bic=ec.wstat(c,delta)
-    res=pcz2(c,delta,r,mu,sigma)
-    res=sum(np.log(res))
-    return res
-
 def bic1EM(c,delta,r):
     """
     Input: color, color errors, radius to the center
     BIC,mu,sigma
     """
-    lkhood_b=lkhood1(c,delta,r)
+    mu,sigma,aic,bic=ec.wstat(c,delta)
+    lkhood_b=sum(np.log(pcz2(c,delta,r,mu,sigma)))
     BIC=-2.*lkhood_b + 2.*np.log(len(c))
     return BIC,mu,sigma
             
