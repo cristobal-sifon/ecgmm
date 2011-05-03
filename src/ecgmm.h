@@ -88,3 +88,82 @@ double AICecgmm(vector<double> &x, vector<double> &xErr,vector<double> &alpha,ve
 }
 
 
+//----- function to calculate the ECGMM parameters and BIC with one component fixed-----------
+
+
+double BICecgmmFixedComponent(vector<double> &x, vector<double> &xErr,vector<double> &alpha,vector<double> &mu,vector<double> &sigma, int fixMu, int fixSigma)
+{
+
+  double ep = 10e-20;    //set precision goal
+  long maxIter = 1000;   //set the maximum iterations
+
+  ecGMM f((int)alpha.size());
+  f.x = x;
+  f.xErr = xErr;
+  f.W = alpha;
+  f.Mu = mu;
+  f.Sigma = sigma;
+  f.M=(int)x.size();    // # of data points
+  f.N=(int)alpha.size();// # of mixutures
+
+  for(int k=0;k<maxIter;k++)
+    {
+      double lhood = f.lhood();
+      f.W_update();
+      f.Mu_update();
+      f.Sigma_update();
+      f.PartialUpdate(fixMu,fixSigma);
+
+      if(log(f.lhood())-log(lhood)<= ep)
+	{
+	  alpha = f.W;
+          mu = f.Mu;
+          sigma = f.Sigma;
+	  break;
+          
+	}
+
+    }
+   return(f.BIC());
+}
+
+
+//----- function to calculate the ECGMM parameters and AIC with one component fix-----------
+
+double AICecgmmFixedComponent(vector<double> &x, vector<double> &xErr,vector<double> &alpha,vector<double> &mu,vector<double> &sigma, int fixMu, int fixSigma)
+{
+
+  double ep = 10e-20;    //set precision goal
+  long maxIter = 1000;   //set the maximum iterations
+
+  ecGMM f((int)alpha.size());
+  f.x = x;
+  f.xErr = xErr;
+  f.W = alpha;
+  f.Mu = mu;
+  f.Sigma = sigma;
+  f.M=(int)x.size();    // # of data points
+  f.N=(int)alpha.size();// # of mixutures
+
+  for(int k=0;k<maxIter;k++)
+    {
+      double lhood = f.lhood();
+      f.W_update();
+      f.Mu_update();
+      f.Sigma_update();
+      f.PartialUpdate(fixMu,fixSigma);
+
+      if(log(f.lhood())-log(lhood)<= ep)
+	{
+	  alpha = f.W;
+          mu = f.Mu;
+          sigma = f.Sigma;
+	  break;
+          
+	}
+
+    }
+   return(f.AIC());
+}
+
+

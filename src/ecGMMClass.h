@@ -90,6 +90,7 @@ class ecGMM
   void Mu_update();
   void Sigma_update();
   void update();//replace W,Mu and Sigma with the new one
+  void PartialUpdate(int fixMu, int fixSigma);//replace some of the W,Mu and Sigma
   double lhood();// Calculate the likelihood
   double BIC();// Calculate the BIC of the maximum likelihood
   double AIC();// Calculate the AIC of the maximum likelihood
@@ -209,6 +210,19 @@ void ecGMM::update()
       Sigma[i] = Sigmat[i];
     }
 }
+
+//-------Partial updates --------------------
+void ecGMM::PartialUpdate(int fixMu, int fixSigma)
+{
+  for(int i=0; i<N; i++)
+    {
+      W[i] = Wt[i];
+      if(i != fixMu){Mu[i] = Mut[i];}
+      if(i != fixSigma){Sigma[i] = Sigmat[i];}
+    }
+}
+
+
 
 //-----calculate the likelihood------------
 double ecGMM::lhood()

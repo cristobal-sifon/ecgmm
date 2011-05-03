@@ -278,10 +278,101 @@ def bsecgmm(xx=None,xxerr=None,aalpha=None,mmu=None,ssigma=None,nboot=50,InfoCri
             alphaB.append(alpha)
             muB.append(mu)
             sigmaB.append(sigma)
-    
-
     return(0)
 
+
+def bic_ecgmmFixedComponent(xx=None,xxerr=None,aalpha=None,mmu=None,ssigma=None,fixMu=0,fixSigma=0):
+  
+    """
+    Functions:
+     
+     ------------------------------------------------------------------
+     bic_ecgmmFixedComponent:
+
+         Purpose: perform the ECGMM and return Bayesian Information 
+                  Criterion (BIC) with one component fixed. The index of the
+                  fixed component is indicated by fixAlpha, fixeMu, fixSigma,
+                  which are three integers to specify the component. The number
+                  of mixtures is determined by the input array of alpha of your
+                  initial guess. If you want the component unfixed, input the 
+                  fixAlpha/fixMu/fixSigma as negative integer
+
+         Call  : bic_ecgmmFixedComponent(x,xerr,alpha,mu,sigma,0,0)
+                 fix the first component (default)
+                 bic_ecgmmFixedComponent(x,xerr,alpha,mu,sigma,-1,0)
+                 fix the first mu and sigma, but allow alpha change.
+         Return: BIC. The input alpha, mu and sigma are also updated with
+                 the final fitting values.
+    """
+    if xxerr == None:
+        xxerr = np.zeros(len(xx))
+    M=len(xx)
+    N=len(aalpha)
+    x=DoubleVector(M)
+    xerr=DoubleVector(M)
+    alpha=DoubleVector(N)
+    mu=DoubleVector(N)
+    sigma=DoubleVector(N)
+
+    for i in range(0,M):
+        x[i]=np.double(xx[i])
+        xerr[i]=np.double(xxerr[i])
+    
+    for i in range(0,N):
+        alpha[i]=np.double(aalpha[i])
+        mu[i]=np.double(mmu[i])
+        sigma[i]=np.double(ssigma[i])
+
+    BIC=BICecgmmFixedComponent(x,xerr,alpha,mu,sigma,fixMu,fixSigma)
+      
+    for i in range(0,N):
+        aalpha[i]=alpha[i]
+        mmu[i]=mu[i]
+        ssigma[i]=sigma[i]
+    return(BIC)
+
+
+def aic_ecgmmFixedComponent(xx=None,xxerr=None,aalpha=None,mmu=None,ssigma=None,fixMu=0,fixSigma=0):
+
+    """ 
+    aic_ecgmmFixedComponent:
+
+         Purpose: perform the ECGMM with one component fixed and return 
+                  Akaike Information Criterion 
+                  (AIC). The number of mixtures is determined by the input 
+                  array of alpha of your initial guess. 
+
+         Call  : aic_ecgmmFixedComponent(x,xerr,alpha,mu,sigma,0,0)
+                 see the bic_ecgmmFixedComponent part for more details.
+         Return: AIC. The input alpha, mu and sigma are also updated with 
+                 the final fitting values.
+    """
+    if xxerr == None:
+        xxerr = np.zeros(len(xx))    
+    M=len(xx)
+    N=len(aalpha)
+    x=DoubleVector(M)
+    xerr=DoubleVector(M)
+    alpha=DoubleVector(N)
+    mu=DoubleVector(N)
+    sigma=DoubleVector(N)
+
+    for i in range(0,M):
+        x[i]=np.double(xx[i])
+        xerr[i]=np.double(xxerr[i])
+    
+    for i in range(0,N):
+        alpha[i]=np.double(aalpha[i])
+        mu[i]=np.double(mmu[i])
+        sigma[i]=np.double(ssigma[i])
+
+    AIC=AICecgmmFixedComponent(x,xerr,alpha,mu,sigma,fixMu=0,fixSigma=0)
+    for i in range(0,N):
+        aalpha[i]=alpha[i]
+        mmu[i]=mu[i]
+        ssigma[i]=sigma[i]
+        
+    return(AIC)
 
 
 
