@@ -25,7 +25,7 @@ sdbg=0.3
 cl=np.random.normal(mucl,sdcl,ncl)
 bg=np.random.normal(mubg,sdbg,nbg)
 
-xerr=np.random.uniform(0,0.1,ncl+nbg)
+xerr=np.random.uniform(0,0.2,ncl+nbg)
 
 x=np.append(cl,bg)+np.random.uniform(0,1,ncl+nbg)*xerr
 
