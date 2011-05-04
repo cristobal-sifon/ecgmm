@@ -220,7 +220,7 @@ def ecgmmplot(x,alpha,mu,sigma):
          Return: a pylab plot object. Use pl.show() to see it
     """
 
-    color=['r','g','b','c','m','y','k']
+    color=['r','b','g','c','m','y','k']
     if len(alpha)<=len(color):
         pl.hold(True)
         for i in range(0,len(alpha)):
