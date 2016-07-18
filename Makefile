@@ -9,14 +9,14 @@ ecgmm_wrap.o:ecgmm_wrap.cxx
 	g++ -c -fPIC src/ecgmm_wrap.cxx -I/usr/include/python2.7 -o bin/ecgmm_wrap.o
 
 ecgmm_wrap.cxx:
-    mkdir -p bin
+    	mkdir -p bin
 	swig -c++ -python src/ecgmm.i 
 
 cpp: ecGMMexample.o
 	g++ bin/ecGMMexample.o -Wall -lgsl -lgslcblas -lm -o bin/ecGMMexample
 
 ecGMMexample.o:
-    mkdir -p bin
+    	mkdir -p bin
 	g++ -c src/ecGMMexample.cpp -o bin/ecGMMexample.o
 
 clean:
