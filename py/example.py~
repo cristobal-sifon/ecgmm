@@ -7,9 +7,6 @@ Created by: Jiangang Hao @ Phys @ U of Michigan 3/9/2009
 
 """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-
 import numpy as np
 import pylab as pl
 import ecgmmPy as ec

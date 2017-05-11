@@ -229,7 +229,7 @@ def ecgmmplot(x,alpha,mu,sigma):
         for i in range(0,len(alpha)):
             pl.plot(x,alpha[i]*np.exp(-(x-mu[i])**2/2./sigma[i]**2)/np.sqrt(2*3.14159265)/sigma[i],'-',color=color[i])
     else:
-        print("Number of mixture exceeds 7, all will be in same color")
+        print "Number of mixture exceeds 7, all will be in same color"
         pl.hold(True)
         for i in range(0,len(alpha)):
             pl.plot(x,alpha[i]*np.exp(-(x-mu[i])**2/2./sigma[i]**2)/np.sqrt(2*3.14159265)/sigma[i],'b-')
@@ -257,7 +257,7 @@ def bsecgmm(xx=None,xxerr=None,aalpha=None,mmu=None,ssigma=None,nboot=50,InfoCri
     if InfoCriteria == 'BIC':
         BIC=np.zeros(nboot)
         for i in range(nboot):
-            print(i)
+            print i
             ok=np.random.randint(0,nboot-1,nboot)
             x=xx[ok]
             xerr=xxerr[ok]
